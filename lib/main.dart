@@ -1,3 +1,4 @@
+import 'package:explore_solar_app/helpers/custom_scroll_behavior.dart';
 import 'package:explore_solar_app/screens/explore_screen.dart';
 import 'package:explore_solar_app/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
+      scrollBehavior: CustomScrollBehavior(),
       debugShowCheckedModeBanner: false,
       home: ExploreScreen(),
     );
