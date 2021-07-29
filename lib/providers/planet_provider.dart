@@ -1,8 +1,11 @@
+import 'package:explore_solar_app/helpers/dataset.dart';
 import 'package:explore_solar_app/models/planet.dart';
 import 'package:flutter/material.dart';
 
-class PlanetProvider with ChangeNotifier{
-  List<Planet> _items = [];
+class PlanetProvider with ChangeNotifier {
+  List<Planet> _items = dataSet
+      .map((e) => Planet(e['name'], e['num'], e['image'], e['description'], []))
+      .toList();
 
   List<Planet> get items => _items;
 

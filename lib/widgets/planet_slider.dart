@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:explore_solar_app/models/planet.dart';
+import 'package:explore_solar_app/providers/planet_provider.dart';
 import 'package:explore_solar_app/slide_bloc/slide_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PlanetSlider extends StatefulWidget {
   const PlanetSlider({Key? key}) : super(key: key);
@@ -14,15 +17,13 @@ class PlanetSlider extends StatefulWidget {
 class _PlanetSliderState extends State<PlanetSlider> {
   final _sliderController = PageController(viewportFraction: .45);
   final _slideBloc = SlideBloc.getInstance();
+  late final List<Planet> _planets;
   late StreamSink<int> _slideSink;
   double _currentPage = 0;
-
-  final list = List.generate(9, (index) => index);
 
   void _sliderListener() {
     setState(() {
       _currentPage = _sliderController.page ?? 0;
-      // print(_sliderController.page);
       _slideSink.add(_sliderController.page?.toInt() ?? 0);
     });
   }
@@ -31,6 +32,7 @@ class _PlanetSliderState extends State<PlanetSlider> {
   void initState() {
     _sliderController.addListener(_sliderListener);
     _slideSink = _slideBloc.slideSink;
+    _planets = Provider.of<PlanetProvider>(context, listen: false).items;
     super.initState();
   }
 
@@ -53,10 +55,8 @@ class _PlanetSliderState extends State<PlanetSlider> {
         itemBuilder: (ctx, idx) {
           final res = idx - _currentPage;
           final value = -0.4 * res + 1;
-          final opacity = ((res + 1) + 0.5).clamp(0.0, 1.0);
+          final opacity = ((res + 1) + 0.3).clamp(0.0, 1.0);
           final scale = (_currentPage - idx + 1).clamp(0.97, 1.0);
-          print(value);
-          print('$_currentPage , $idx');
           return Transform(
             transform: Matrix4.identity()
               ..setEntry(3, 2, 0.05)
@@ -85,14 +85,14 @@ class _PlanetSliderState extends State<PlanetSlider> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white),
-                          child: Text('${list[idx]}'),
+                          child: Text('${_planets[idx].name}'),
                         ),
                       ),
                     ),
                   ),
                   Positioned(
                     child: Image.asset(
-                      'assets/images/earth_img.png',
+                      _planets[idx].image,
                       width: 250,
                     ),
                     top: 0,
@@ -102,7 +102,7 @@ class _PlanetSliderState extends State<PlanetSlider> {
             ),
           );
         },
-        itemCount: list.length,
+        itemCount: _planets.length,
         onPageChanged: (value) {
           _sliderController.animateToPage(value,
               duration: Duration(milliseconds: 220),
