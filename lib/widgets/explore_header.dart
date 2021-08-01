@@ -16,10 +16,10 @@ class ExploreHeader extends StatelessWidget {
             'Explore',
             style: theme.textTheme.headline6,
           ),
-          SizedBox(height: 10,),
+          SizedBox(height: 5,),
           Row(
             children: [
-              Text('Solar system', style: theme.primaryTextTheme.headline4,),
+              Text('Solar System', style: theme.primaryTextTheme.headline4,),
               SizedBox(width: 5,),
               Icon(Icons.keyboard_arrow_down_sharp, color: Color(0xffea8ec1),)
             ],

@@ -39,6 +39,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
           ),
           child: Container(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 ExploreHeader(),
                 PlanetSlider(),

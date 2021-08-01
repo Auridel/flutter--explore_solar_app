@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:explore_solar_app/models/planet.dart';
 import 'package:explore_solar_app/providers/planet_provider.dart';
 import 'package:explore_solar_app/slide_bloc/slide_bloc.dart';
+import 'package:explore_solar_app/widgets/slider_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +49,7 @@ class _PlanetSliderState extends State<PlanetSlider> {
     return Container(
       clipBehavior: Clip.none,
       width: size.width,
-      height: 450,
+      height: 400,
       child: PageView.builder(
         controller: _sliderController,
         scrollDirection: Axis.horizontal,
@@ -65,40 +66,7 @@ class _PlanetSliderState extends State<PlanetSlider> {
               ..scale(scale),
             child: Opacity(
               opacity: opacity,
-              child: Stack(
-                clipBehavior: Clip.none,
-                fit: StackFit.expand,
-                alignment: Alignment.center,
-                children: [
-                  Positioned(
-                    top: 20,
-                    width: size.width - 30,
-                    child: Container(
-                      clipBehavior: Clip.none,
-                      width: size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 30, right: 30, top: 70, bottom: 100),
-                        child: Container(
-                          height: 300,
-                          width: 300,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white),
-                          child: Text('${_planets[idx].name}'),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    child: Image.asset(
-                      _planets[idx].image,
-                      width: 250,
-                    ),
-                    top: 0,
-                  ),
-                ],
-              ),
+              child: SliderCard(planet: _planets[idx],),
             ),
           );
         },
