@@ -1,4 +1,6 @@
+import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 import 'package:explore_solar_app/models/planet.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,11 +14,13 @@ class PlanetDetailsScreen extends StatefulWidget {
 }
 
 class _PlanetDetailsScreenState extends State<PlanetDetailsScreen> {
-  Planet? _planet;
+  final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
+  late final Planet? _planet;
   bool _isInit = false;
 
   @override
   void initState() {
+    _tapGestureRecognizer.onTap = _onTap;
     super.initState();
   }
 
@@ -26,6 +30,27 @@ class _PlanetDetailsScreenState extends State<PlanetDetailsScreen> {
       _planet = ModalRoute.of(context)?.settings.arguments as Planet;
     }
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _tapGestureRecognizer.dispose();
+    super.dispose();
+  }
+
+  void _onTap() {
+    print(_planet!.url);
+    _launchUrl(_planet!.url);
+  }
+
+  Future<void> _launchUrl(String url) async {
+    await urlLauncher.canLaunch(url)
+        ? await urlLauncher.launch(url)
+        : ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+            'Can\'t open url',
+            textAlign: TextAlign.center,
+          )));
   }
 
   @override
@@ -112,6 +137,9 @@ class _PlanetDetailsScreenState extends State<PlanetDetailsScreen> {
                           textAlign: TextAlign.left,
                         )),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Container(
                     width: size.width,
                     padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -123,7 +151,34 @@ class _PlanetDetailsScreenState extends State<PlanetDetailsScreen> {
                         textAlign: TextAlign.left,
                       ),
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: Divider(),
+                  ),
+                  Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 15),
+                      child: RichText(
+                        text: TextSpan(children: [
+                          TextSpan(
+                            text: '${_planet!.description}',
+                            style: theme.textTheme.headline4,
+                          ),
+                          TextSpan(
+                            text: ' Read more',
+                            style: theme.textTheme.headline3,
+                            recognizer: _tapGestureRecognizer,
+                          )
+                        ]),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: Divider(),
+                  ),
                 ],
               )),
       ),

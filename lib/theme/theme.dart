@@ -42,7 +42,7 @@ final theme = ThemeData(
       fontSize: 13,
     ),
     headline3: TextStyle(
-      color: Color(0xff44496f),
+      color: Color(0xffffbfa9),
       fontSize: 12
     )
   )

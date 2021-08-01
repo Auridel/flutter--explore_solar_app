@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class PlanetProvider with ChangeNotifier {
   List<Planet> _items = dataSet
-      .map((e) => Planet(e['name'], e['num'], e['image'], e['description'], []))
+      .map((e) => Planet(e['name'], e['num'], e['image'], e['description'], e['url'], []))
       .toList();
 
   List<Planet> get items => _items;
