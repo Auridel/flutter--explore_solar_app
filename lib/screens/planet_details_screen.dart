@@ -15,6 +15,7 @@ class PlanetDetailsScreen extends StatefulWidget {
 
 class _PlanetDetailsScreenState extends State<PlanetDetailsScreen> {
   final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
+  final _galleryController = PageController(viewportFraction: .45);
   late final Planet? _planet;
   bool _isInit = false;
 
@@ -179,6 +180,26 @@ class _PlanetDetailsScreenState extends State<PlanetDetailsScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: Divider(),
                   ),
+                  Container(
+                    height: 200,
+                    width: size.width,
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: PageView.builder(
+                      controller: _galleryController,
+                      itemBuilder: (ctx, idx) => Container(
+                          child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        width: 150,
+                        height: 150,
+                        child: FadeInImage(
+                            width: 50,
+                            image: NetworkImage(_planet!.galleryImages[idx]),
+                            placeholder: AssetImage(
+                                'assets/images/planet_placeholder.png')),
+                      )),
+                      itemCount: _planet!.galleryImages.length,
+                    ),
+                  )
                 ],
               )),
       ),
