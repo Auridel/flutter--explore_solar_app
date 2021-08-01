@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:explore_solar_app/models/planet.dart';
 import 'package:explore_solar_app/providers/planet_provider.dart';
+import 'package:explore_solar_app/screens/planet_details_screen.dart';
 import 'package:explore_solar_app/slide_bloc/slide_bloc.dart';
 import 'package:explore_solar_app/widgets/slider_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,23 +59,30 @@ class _PlanetSliderState extends State<PlanetSlider> {
           final value = -0.4 * res + 1;
           final opacity = ((res + 1) + 0.3).clamp(0.0, 1.0);
           final scale = (_currentPage - idx + 1).clamp(0.97, 1.0);
-          return Transform(
-            transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.05)
-              ..translate(size.width *1.1 * (1 - value).abs(), res * -25,
-                  res.abs())
-              ..scale(scale),
-            child: Opacity(
-              opacity: opacity,
-              child: SliderCard(planet: _planets[idx],),
+          return GestureDetector(
+            onTap:() {
+              Navigator.of(context).pushNamed(PlanetDetailsScreen.routeName,
+                  arguments: _planets[idx]);
+            },
+            child: Transform(
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.05)
+                ..translate(
+                    size.width * 1.1 * (1 - value).abs(), res * -25, res.abs())
+                ..scale(scale),
+              child: Opacity(
+                opacity: opacity,
+                child: SliderCard(
+                  planet: _planets[idx],
+                ),
+              ),
             ),
           );
         },
         itemCount: _planets.length,
         onPageChanged: (value) {
           _sliderController.animateToPage(value,
-              duration: Duration(milliseconds: 220),
-              curve: Curves.easeInOut);
+              duration: Duration(milliseconds: 220), curve: Curves.easeInOut);
         },
       ),
     );

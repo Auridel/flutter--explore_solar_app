@@ -40,9 +40,12 @@ class SliderCard extends StatelessWidget {
                       Positioned(
                         bottom: 35,
                         right: 25,
-                        child: Text(
-                          '${_planet.num}',
-                          style: theme.primaryTextTheme.headline6,
+                        child: Hero(
+                          tag: _planet.num,
+                          child: Text(
+                            '${_planet.num}',
+                            style: theme.primaryTextTheme.headline6,
+                          ),
                         ),
                       ),
                     Positioned(
@@ -55,14 +58,20 @@ class SliderCard extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                '${_planet.name}',
-                                style: theme.textTheme.headline5,
+                              Hero(
+                                tag: _planet.name,
+                                child: Text(
+                                  '${_planet.name}',
+                                  style: theme.textTheme.headline5,
+                                ),
                               ),
                               SizedBox(height: 5,),
-                              Text(
-                                'Solar System',
-                                style: theme.primaryTextTheme.headline3,
+                              Hero(
+                                tag: 'solar${_planet.name}',
+                                child: Text(
+                                  'Solar System',
+                                  style: theme.primaryTextTheme.headline3,
+                                ),
                               ),
                               SizedBox(
                                 height: 15,
@@ -78,9 +87,25 @@ class SliderCard extends StatelessWidget {
           ),
         ),
         Positioned(
-          child: Image.asset(
-            _planet.image,
-            width: 210,
+          child: Hero(
+            tag: _planet.image,
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 1,
+                    offset: Offset(-10, 30),
+                    blurRadius: 30,
+                    color: Colors.black12,
+                  )
+                ]
+              ),
+              child: Image.asset(
+                _planet.image,
+                width: 210,
+              ),
+            ),
           ),
           top: 0,
         ),
