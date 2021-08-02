@@ -60,8 +60,8 @@ class _PlanetSliderState extends State<PlanetSlider> {
           final opacity = ((res + 1) + 0.3).clamp(0.0, 1.0);
           final scale = (_currentPage - idx + 1).clamp(0.97, 1.0);
           return GestureDetector(
-            onTap:() {
-              if(_currentPage.toInt() != idx) return;
+            onTap: () {
+              if (_currentPage.toInt() != idx) return;
               Navigator.of(context).pushNamed(PlanetDetailsScreen.routeName,
                   arguments: _planets[idx]);
             },

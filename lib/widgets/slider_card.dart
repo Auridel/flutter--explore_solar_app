@@ -26,7 +26,10 @@ class SliderCard extends StatelessWidget {
             width: size.width,
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: 30, right: 30, top: 70,),
+                left: 30,
+                right: 30,
+                top: 70,
+              ),
               child: Container(
                 height: 300,
                 width: 300,
@@ -54,7 +57,8 @@ class SliderCard extends StatelessWidget {
                         right: 0,
                         height: 120,
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 25, right: 25, bottom: 20),
+                          padding: const EdgeInsets.only(
+                              left: 25, right: 25, bottom: 20),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -65,7 +69,9 @@ class SliderCard extends StatelessWidget {
                                   style: theme.textTheme.headline5,
                                 ),
                               ),
-                              SizedBox(height: 5,),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Hero(
                                 tag: 'solar${_planet.name}',
                                 child: Text(
@@ -90,17 +96,14 @@ class SliderCard extends StatelessWidget {
           child: Hero(
             tag: _planet.image,
             child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    spreadRadius: 1,
-                    offset: Offset(-10, 30),
-                    blurRadius: 30,
-                    color: Colors.black12,
-                  )
-                ]
-              ),
+              decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                BoxShadow(
+                  spreadRadius: 1,
+                  offset: Offset(-10, 30),
+                  blurRadius: 30,
+                  color: Colors.black12,
+                )
+              ]),
               child: Image.asset(
                 _planet.image,
                 width: 210,

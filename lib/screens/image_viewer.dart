@@ -22,9 +22,7 @@ class _ImageViewerState extends State<ImageViewer> {
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
       images = args['images'];
       imageIdx = args['imageIdx'];
-      _controller = PageController(
-        initialPage: imageIdx
-      );
+      _controller = PageController(initialPage: imageIdx);
       _isInit = true;
     }
     super.didChangeDependencies();
@@ -58,7 +56,8 @@ class _ImageViewerState extends State<ImageViewer> {
                 controller: _controller,
                 itemBuilder: (ctx, idx) => InteractiveViewer(
                   child: Center(
-                    child: Hero(tag: images[idx], child: Image.network(images[idx])),
+                    child: Hero(
+                        tag: images[idx], child: Image.network(images[idx])),
                   ),
                 ),
                 itemCount: images.length,

@@ -5,7 +5,6 @@ class PressableIcon extends StatelessWidget {
   final Color color;
   final Function(BuildContext ctx) _onPress;
 
-
   PressableIcon(this.icon, this.color, this._onPress);
 
   @override
@@ -19,7 +18,10 @@ class PressableIcon extends StatelessWidget {
       ),
       child: IconButton(
         alignment: Alignment.center,
-        icon: Icon(icon, color: color,),
+        icon: Icon(
+          icon,
+          color: color,
+        ),
         onPressed: () {
           print('sdasdsadsadasds');
           _onPress(context);

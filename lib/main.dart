@@ -1,6 +1,7 @@
 import 'package:explore_solar_app/helpers/custom_scroll_behavior.dart';
 import 'package:explore_solar_app/providers/planet_provider.dart';
 import 'package:explore_solar_app/screens/explore_screen.dart';
+import 'package:explore_solar_app/screens/home_screen.dart';
 import 'package:explore_solar_app/screens/image_viewer.dart';
 import 'package:explore_solar_app/screens/planet_details_screen.dart';
 import 'package:explore_solar_app/theme/theme.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         theme: theme,
         scrollBehavior: CustomScrollBehavior(),
         debugShowCheckedModeBanner: false,
-        home: ExploreScreen(),
+        home: HomeScreen(),
         routes: {
           ExploreScreen.routeName: (ctx) => ExploreScreen(),
           PlanetDetailsScreen.routeName: (ctx) => PlanetDetailsScreen(),
