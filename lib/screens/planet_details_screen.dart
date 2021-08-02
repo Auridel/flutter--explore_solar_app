@@ -198,7 +198,10 @@ class _PlanetDetailsScreenState extends State<PlanetDetailsScreen> {
                               onTap: () {
                                 Navigator.of(context).pushNamed(
                                     ImageViewer.routeName,
-                                    arguments: _planet!.galleryImages[idx]);
+                                    arguments: {
+                                      'images': _planet!.galleryImages,
+                                      'imageIdx': idx,
+                                    });
                               },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(

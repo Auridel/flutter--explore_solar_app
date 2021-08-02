@@ -10,13 +10,21 @@ class ImageViewer extends StatefulWidget {
 }
 
 class _ImageViewerState extends State<ImageViewer> {
-  late final String url;
+  late final List<String> images;
+  late final int imageIdx;
+  late final PageController _controller;
   bool _isInit = false;
 
   @override
   void didChangeDependencies() {
     if (!_isInit) {
-      url = ModalRoute.of(context)?.settings.arguments as String? ?? '';
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      images = args['images'];
+      imageIdx = args['imageIdx'];
+      _controller = PageController(
+        initialPage: imageIdx
+      );
       _isInit = true;
     }
     super.didChangeDependencies();
@@ -40,8 +48,21 @@ class _ImageViewerState extends State<ImageViewer> {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Center(
-              child: Hero(tag: url, child: Image.network(url)),
+            Dismissible(
+              direction: DismissDirection.down,
+              key: const Key('imageViewer'),
+              onDismissed: (_) {
+                Navigator.of(context).pop();
+              },
+              child: PageView.builder(
+                controller: _controller,
+                itemBuilder: (ctx, idx) => InteractiveViewer(
+                  child: Center(
+                    child: Hero(tag: images[idx], child: Image.network(images[idx])),
+                  ),
+                ),
+                itemCount: images.length,
+              ),
             ),
             Positioned(
               left: 20,
