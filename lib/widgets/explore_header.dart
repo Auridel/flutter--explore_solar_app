@@ -12,16 +12,31 @@ class ExploreHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Explore',
-            style: theme.textTheme.headline6,
+          Hero(
+            tag: 'explore',
+            child: Text(
+              'Explore',
+              style: theme.textTheme.headline6,
+            ),
           ),
-          SizedBox(height: 5,),
+          SizedBox(
+            height: 5,
+          ),
           Row(
             children: [
-              Text('Solar System', style: theme.primaryTextTheme.headline4,),
-              SizedBox(width: 5,),
-              Icon(Icons.keyboard_arrow_down_sharp, color: Color(0xffea8ec1),)
+              Hero(
+                  tag: 'solar_system',
+                  child: Text(
+                    'Solar System',
+                    style: theme.primaryTextTheme.headline4,
+                  )),
+              SizedBox(
+                width: 5,
+              ),
+              Icon(
+                Icons.keyboard_arrow_down_sharp,
+                color: Color(0xffea8ec1),
+              )
             ],
           ),
         ],

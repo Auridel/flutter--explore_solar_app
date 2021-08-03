@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:explore_solar_app/providers/planet_provider.dart';
+import 'package:explore_solar_app/screens/explore_screen.dart';
 import 'package:explore_solar_app/widgets/home_header.dart';
+import 'package:explore_solar_app/widgets/home_swipe_hint.dart';
 import 'package:explore_solar_app/widgets/planet_circle.dart';
 import 'package:explore_solar_app/widgets/rotating%20_planet.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late final AnimationController _glowController;
   late final Animation<double> _glowAnimation;
+  double _baseVerticalDrag = 0.0;
 
   final List<int> dummyList = List.generate(8, (index) => index + 1);
 
@@ -53,64 +56,81 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         systemNavigationBarIconBrightness: Brightness.light,
       ),
       child: SafeArea(
-        child: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                Color(0xff194fa5),
-                Color(0xff8a59b4),
-              ])),
-          width: size.width,
-          height: size.height,
-          child: Stack(
-            clipBehavior: Clip.hardEdge,
-            fit: StackFit.expand,
-            children: [
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
-                    BoxShadow(
-                      color: Colors.orange,
-                      blurRadius: 40,
-                      spreadRadius: _glowAnimation.value,
-                    )
-                  ]),
-                  child: Hero(
-                    tag: planets[0].image,
-                    child: Image.asset(
-                      'assets/images/sun_img.png',
-                      width: 100,
+        child: GestureDetector(
+          onVerticalDragStart: (details) {
+            _baseVerticalDrag = details.globalPosition.dy;
+          },
+          onVerticalDragUpdate: (details) {
+            if ((_baseVerticalDrag - details.globalPosition.dy).abs() > 15) {
+              Navigator.of(context).pushNamed(ExploreScreen.routeName);
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                  Color(0xff194fa5),
+                  Color(0xff8a59b4),
+                ])),
+            width: size.width,
+            height: size.height,
+            child: Stack(
+              clipBehavior: Clip.hardEdge,
+              fit: StackFit.expand,
+              children: [
+                Center(
+                  child: Container(
+                    decoration:
+                        BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                      BoxShadow(
+                        color: Colors.orange,
+                        blurRadius: 40,
+                        spreadRadius: _glowAnimation.value,
+                      )
+                    ]),
+                    child: Hero(
+                      tag: planets[0].image,
+                      child: Image.asset(
+                        'assets/images/sun_img.png',
+                        width: 100,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              ...dummyList
-                  .map((e) => PlanetCircle(size, e * 50.0 + 50))
-                  .toList(),
-              ...dummyList
-                  .map(
-                    (e) => RotatingPlanet(
-                        size,
-                        Color((e * 0.05 * 0xFFFFFF).toInt()).withOpacity(1.0),
-                        (e * 50.0 + 50),
-                        Duration(seconds: e * 4)),
-                  )
-                  .toList(),
-              Positioned(
-                  top: 10,
-                  left: 0,
-                  right: 0,
-                  child: HomeHeader('Explore', 50.0, Duration(seconds: 1),
-                      Duration(seconds: 1))),
-              Positioned(
-                  top: 60,
-                  left: 0,
-                  right: 0,
-                  child: HomeHeader('Solar System', 30.0, Duration(seconds: 1),
-                      Duration(seconds: 2))),
-            ],
+                ...dummyList
+                    .map((e) => PlanetCircle(size, e * 50.0 + 50))
+                    .toList(),
+                ...dummyList
+                    .map(
+                      (e) => RotatingPlanet(
+                          size,
+                          Color((e * 0.05 * 0xFFFFFF).toInt()).withOpacity(1.0),
+                          (e * 50.0 + 50),
+                          Duration(seconds: e * 4)),
+                    )
+                    .toList(),
+                Positioned(
+                    top: 10,
+                    left: 0,
+                    right: 0,
+                    child: HomeHeader('Explore', 50.0, Duration(seconds: 1),
+                        Duration(seconds: 1), 'explore')),
+                Positioned(
+                    top: 60,
+                    left: 0,
+                    right: 0,
+                    child: HomeHeader(
+                        'Solar System',
+                        30.0,
+                        Duration(seconds: 1),
+                        Duration(seconds: 2),
+                        'solar_system')),
+                Positioned(
+                    bottom: 50, left: 0, right: 0, child: HomeSwipeHint()),
+              ],
+            ),
           ),
         ),
       ),

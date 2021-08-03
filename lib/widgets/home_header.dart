@@ -5,8 +5,9 @@ class HomeHeader extends StatefulWidget {
   final double _fontSize;
   final Duration _duration;
   final Duration _animationDelay;
+  final String _heroTag;
 
-  HomeHeader(this._text, this._fontSize, this._duration, this._animationDelay);
+  HomeHeader(this._text, this._fontSize, this._duration, this._animationDelay, this._heroTag);
 
   @override
   _HomeHeaderState createState() => _HomeHeaderState();
@@ -43,14 +44,17 @@ class _HomeHeaderState extends State<HomeHeader>
       position: _offsetAnimation,
       child: FadeTransition(
         opacity: _animation,
-        child: Text(
-          widget._text,
-          style: TextStyle(
-              fontSize: widget._fontSize,
-              color: Colors.white,
-              decoration: TextDecoration.none,
-              fontFamily: 'sans-serif'),
-          textAlign: TextAlign.center,
+        child: Hero(
+          tag: widget._heroTag,
+          child: Text(
+            widget._text,
+            style: TextStyle(
+                fontSize: widget._fontSize,
+                color: Colors.white,
+                decoration: TextDecoration.none,
+                fontFamily: 'sans-serif'),
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );
