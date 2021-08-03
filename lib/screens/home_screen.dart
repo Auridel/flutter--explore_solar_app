@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:explore_solar_app/providers/planet_provider.dart';
+import 'package:explore_solar_app/widgets/home_header.dart';
 import 'package:explore_solar_app/widgets/planet_circle.dart';
 import 'package:explore_solar_app/widgets/rotating%20_planet.dart';
 import 'package:flutter/material.dart';
@@ -94,9 +95,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         size,
                         Color((e * 0.05 * 0xFFFFFF).toInt()).withOpacity(1.0),
                         (e * 50.0 + 50),
-                        Duration(seconds: e * 3)),
+                        Duration(seconds: e * 4)),
                   )
                   .toList(),
+              Positioned(
+                  top: 10,
+                  left: 0,
+                  right: 0,
+                  child: HomeHeader('Explore', 50.0, Duration(seconds: 1),
+                      Duration(seconds: 1))),
+              Positioned(
+                  top: 60,
+                  left: 0,
+                  right: 0,
+                  child: HomeHeader('Solar System', 30.0, Duration(seconds: 1),
+                      Duration(seconds: 2))),
             ],
           ),
         ),
