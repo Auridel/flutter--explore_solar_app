@@ -10,7 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PlanetSlider extends StatefulWidget {
-  const PlanetSlider({Key? key}) : super(key: key);
+  final Function(PageController sliderController) setSliderController;
+
+  const PlanetSlider(
+      {Key? key,
+      required Function(PageController sliderController) setSliderController})
+      : this.setSliderController = setSliderController,
+        super(key: key);
 
   @override
   _PlanetSliderState createState() => _PlanetSliderState();
@@ -35,6 +41,7 @@ class _PlanetSliderState extends State<PlanetSlider> {
     _sliderController.addListener(_sliderListener);
     _slideSink = _slideBloc.slideSink;
     _planets = Provider.of<PlanetProvider>(context, listen: false).items;
+    widget.setSliderController(_sliderController);
     super.initState();
   }
 
