@@ -29,10 +29,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
   }
 
   void _animateToPage(int page) {
-    print(_sliderController.page);
-    print(page);
-    _sliderController.animateToPage(page,
-        duration: Duration(milliseconds: 200), curve: Curves.linear);
+    _sliderController.jumpToPage(page);
   }
 
   @override
